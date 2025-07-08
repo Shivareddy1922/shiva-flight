@@ -13,7 +13,7 @@ export type HomePageType = {
 };
 
 const HomePage: FunctionComponent<HomePageType> = ({ className = "" }) => {
-  const [dateFieldDateTimePickerValue, setDateFieldDateTimePickerValue] = useState(null);
+  const [dateFieldDateTimePickerValue, setDateFieldDateTimePickerValue] = useState<Date | null>(null);
   const [departure, setDeparture] = useState("Singapore - Changi (SIN)");
   const [destination, setDestination] = useState("");
   const navigate = useNavigate();
@@ -110,7 +110,7 @@ const HomePage: FunctionComponent<HomePageType> = ({ className = "" }) => {
                       <DatePicker
                         label="Date"
                         value={dateFieldDateTimePickerValue}
-                        onChange={(newValue: any) => {
+                        onChange={(newValue: Date | null) => {
                           setDateFieldDateTimePickerValue(newValue);
                         }}
                         sx={{

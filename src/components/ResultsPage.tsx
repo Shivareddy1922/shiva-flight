@@ -17,7 +17,7 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
   className = "",
 }) => {
   const [dateFieldDateTimePickerValue, setDateFieldDateTimePickerValue] =
-    useState(null);
+    useState<Date | null>(null);
   const [searchParams] = useSearchParams();
   const [departure, setDeparture] = useState(searchParams.get('departure') || "Singapore (SIN)");
   const [destination, setDestination] = useState(searchParams.get('destination') || "Los Angeles (LAX)");
@@ -140,7 +140,7 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                       <DatePicker
                         label="Date"
                         value={dateFieldDateTimePickerValue}
-                        onChange={(newValue: any) => {
+                        onChange={(newValue: Date | null) => {
                           setDateFieldDateTimePickerValue(newValue);
                         }}
                         sx={{
