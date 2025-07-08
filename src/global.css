@@ -1,0 +1,81 @@
+/* Global CSS Variables */
+:root {
+  --font-baloo-bhai: 'Baloo Bhai', cursive;
+  --font-roboto: 'Roboto', sans-serif;
+  
+  --font-size-14: 14px;
+  --font-size-15: 15px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-22: 22px;
+  --font-size-24: 24px;
+  --font-size-30: 30px;
+  
+  --color-white: #fff;
+  --color-orange-100: #ff8500;
+  --color-orange-200: #f99a0e;
+  --color-darkorange: #ff7300;
+  --color-cornflowerblue-200: #1262af;
+  --color-cornflowerblue-300: #1262af;
+  --color-dimgray-100: #757575;
+  --color-dimgray-200: #646464;
+  --color-gray-100: #8e8e8e;
+  --color-gray-200: #7c8db0;
+  --color-gray-300: #999;
+  --color-darkslategray-100: #434343;
+  --color-darkslategray-200: #2d3748;
+  --color-slategray: #576074;
+  --color-aliceblue: #f0f8ff;
+  --color-whitesmoke: #f5f5f5;
+  
+  --br-4: 4px;
+  --br-6: 6px;
+  --br-10: 10px;
+  --br-12: 12px;
+  
+  --gap-10: 10px;
+  --gap-12: 12px;
+  --gap-14: 14px;
+  --gap-20: 20px;
+  --gap-30: 30px;
+  --gap-36: 36px;
+  
+  --padding-5: 5px;
+  --padding-8: 8px;
+  --padding-20: 20px;
+  --padding-22: 22px;
+  --padding-24: 24px;
+  --padding-28: 28px;
+  --padding-30: 30px;
+  --padding-40: 40px;
+  --padding-80: 80px;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-roboto);
+  line-height: 1.6;
+  color: var(--color-darkslategray-200);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
