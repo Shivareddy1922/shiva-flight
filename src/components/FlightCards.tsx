@@ -4,144 +4,171 @@ import styles from "./FlightCards.module.css";
 
 export type FlightCardsType = {
   className?: string;
+  filters?: {
+    bookOnFickleflight?: boolean;
+    officialAirlines?: boolean;
+    noOvernightFlights?: boolean;
+    noLongStopovers?: boolean;
+    singaporeAirlines?: boolean;
+    qatarAirways?: boolean;
+    oneStop?: boolean;
+    twoStops?: boolean;
+  };
 };
 
 const FlightCards: FunctionComponent<FlightCardsType> = ({
   className = "",
+  filters = {},
 }) => {
+  // Sample flight data
+  const allFlights = [
+    {
+      id: 1,
+      airline: "Turkish Airlines",
+      logo: "/turkish.svg",
+      departure: "11:35 PM",
+      arrival: "4:45 PM",
+      duration: "33H 10M, 1-stop",
+      price: "S$ 723",
+      stops: 1,
+      isOvernight: true,
+    },
+    {
+      id: 2,
+      airline: "Singapore Airlines",
+      logo: "/sia.svg",
+      departure: "8:45 PM",
+      arrival: "7:55 PM",
+      duration: "15H 10M, 2-stops",
+      price: "S$ 900",
+      stops: 2,
+      isOvernight: false,
+    },
+    {
+      id: 3,
+      airline: "Japan Airlines",
+      logo: "/japan.svg",
+      departure: "8:20 PM",
+      arrival: "9:50 PM",
+      duration: "17H 30M, 1-stop",
+      price: "S$ 859",
+      stops: 1,
+      isOvernight: false,
+    },
+    {
+      id: 4,
+      airline: "ANA",
+      logo: "/ana.svg",
+      departure: "6:35 PM",
+      arrival: "9:50 PM",
+      duration: "19H 15M, 1-stop",
+      price: "S$ 936",
+      stops: 1,
+      isOvernight: false,
+    },
+    {
+      id: 5,
+      airline: "American Airlines",
+      logo: "/americanairlines.svg",
+      departure: "8:20 PM",
+      arrival: "9:50 AM",
+      duration: "17H 30M, 1-stop",
+      price: "S$ 939",
+      stops: 1,
+      isOvernight: true,
+    },
+    {
+      id: 6,
+      airline: "Turkish Airlines",
+      logo: "/turkish.svg",
+      departure: "11:35 PM",
+      arrival: "4:45 PM",
+      duration: "33H 10M, 2-stops",
+      price: "S$ 673",
+      stops: 2,
+      isOvernight: true,
+    },
+    {
+      id: 7,
+      airline: "Japan Airlines",
+      logo: "/japan1.svg",
+      departure: "10:25 PM",
+      arrival: "9:10 AM",
+      duration: "26H 45M, 1-stop",
+      price: "S$ 859",
+      stops: 1,
+      isOvernight: true,
+    },
+    {
+      id: 8,
+      airline: "American Airlines",
+      logo: "/americanairlines1.svg",
+      departure: "10:25 PM",
+      arrival: "9:10 AM",
+      duration: "26H 45M, 1-stop",
+      price: "S$ 859",
+      stops: 1,
+      isOvernight: true,
+    },
+  ];
+
+  // Filter flights based on selected filters
+  const filteredFlights = allFlights.filter(flight => {
+    // Filter by overnight flights
+    if (filters.noOvernightFlights && flight.isOvernight) {
+      return false;
+    }
+    
+    // Filter by airline
+    if (filters.singaporeAirlines && !flight.airline.includes("Singapore")) {
+      return false;
+    }
+    
+    // Filter by stops
+    if (filters.oneStop && flight.stops !== 1) {
+      return false;
+    }
+    
+    if (filters.twoStops && flight.stops !== 2) {
+      return false;
+    }
+    
+    return true;
+  });
+
   return (
     <div className={[styles.flightCards, className].join(" ")}>
-      <FlightCard
-        turkish="/turkish.svg"
-        singaporeAirlines="Turkish Airlines"
-        aM="11:35 PM"
-        flightIcon="/flighticon.svg"
-        h55MNonStop="33H 10M, 1-stop"
-        aM1="4:45 PM"
-        s730="S$ 723"
-      />
-      <FlightCard
-        turkish="/sia.svg"
-        turkishIconTransform="unset"
-        singaporeAirlines="Singapore Airlines"
-        singaporeAirlinesTextAlign="center"
-        singaporeAirlinesDisplay="inline-block"
-        singaporeAirlinesWidth="140px"
-        aM="8:45 PM"
-        flightDurationWidth="129px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="83.02%"
-        flightIconRight="8.27%"
-        flightIconLeft="8.71%"
-        h55MNonStop="15H 10M, 2-stops"
-        aM1="7:55 PM"
-        s730="S$ 900"
-      />
-      <FlightCard
-        turkish="/japan.svg"
-        turkishIconTransform="scale(0.8)"
-        singaporeAirlines="Japan Airlines"
-        singaporeAirlinesTextAlign="left"
-        singaporeAirlinesDisplay="unset"
-        singaporeAirlinesWidth="unset"
-        aM="8:20 PM"
-        flightDurationWidth="121px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="88.51%"
-        flightIconRight="6.34%"
-        flightIconLeft="5.15%"
-        h55MNonStop="17H 30M, 1-stop"
-        aM1="9:50 PM"
-        s730="S$ 859"
-      />
-      <FlightCard
-        turkish="/ana.svg"
-        turkishIconTransform="scale(0.8)"
-        singaporeAirlines="ANA"
-        singaporeAirlinesTextAlign="left"
-        singaporeAirlinesDisplay="unset"
-        singaporeAirlinesWidth="unset"
-        aM="6:35 PM"
-        flightDurationWidth="121px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="88.51%"
-        flightIconRight="5.51%"
-        flightIconLeft="5.98%"
-        h55MNonStop="19H 15M, 1-stop"
-        aM1="9:50 PM"
-        s730="S$ 936"
-      />
-      <FlightCard
-        turkish="/americanairlines.svg"
-        turkishIconTransform="unset"
-        singaporeAirlines="American Airlines"
-        singaporeAirlinesTextAlign="center"
-        singaporeAirlinesDisplay="unset"
-        singaporeAirlinesWidth="unset"
-        aM="8:20 PM"
-        flightDurationWidth="121px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="88.51%"
-        flightIconRight="5.51%"
-        flightIconLeft="5.98%"
-        h55MNonStop="17H 30M, 1-stop"
-        aM1="9:50 AM"
-        s730="S$ 939"
-      />
-      <FlightCard
-        turkish="/turkish.svg"
-        turkishIconTransform="unset"
-        singaporeAirlines="Turkish Airlines"
-        singaporeAirlinesTextAlign="left"
-        singaporeAirlinesDisplay="unset"
-        singaporeAirlinesWidth="unset"
-        aM="11:35 PM"
-        flightDurationWidth="129px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="83.02%"
-        flightIconRight="8.27%"
-        flightIconLeft="8.71%"
-        h55MNonStop="33H 10M, 2-stops"
-        aM1="4:45 PM"
-        s730="S$ 673"
-      />
-      <FlightCard
-        turkish="/japan1.svg"
-        turkishIconTransform="scale(0.8)"
-        singaporeAirlines="Japan Airlines"
-        singaporeAirlinesTextAlign="left"
-        singaporeAirlinesDisplay="unset"
-        singaporeAirlinesWidth="unset"
-        aM="10:25 PM"
-        flightDurationWidth="121px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="88.51%"
-        flightIconRight="5.51%"
-        flightIconLeft="5.98%"
-        h55MNonStop="26H 45M, 1-stop"
-        aM1="9:10 AM"
-        s730="S$ 859"
-      />
-      <FlightCard
-        turkish="/americanairlines1.svg"
-        turkishIconTransform="unset"
-        singaporeAirlines="American Airlines"
-        singaporeAirlinesTextAlign="center"
-        singaporeAirlinesDisplay="unset"
-        singaporeAirlinesWidth="unset"
-        aM="10:25 PM"
-        flightDurationWidth="121px"
-        flightIcon="/flighticon1.svg"
-        flightIconWidth="88.51%"
-        flightIconRight="5.51%"
-        flightIconLeft="5.98%"
-        h55MNonStop="26H 45M, 1-stop"
-        aM1="9:10 AM"
-        s730="S$ 859"
-      />
+      {filteredFlights.length > 0 ? (
+        filteredFlights.map((flight, index) => (
+          <FlightCard
+            key={flight.id}
+            turkish={flight.logo}
+            turkishIconTransform={flight.airline.includes("Japan") || flight.airline.includes("ANA") ? "scale(0.8)" : "unset"}
+            singaporeAirlines={flight.airline}
+            singaporeAirlinesTextAlign={flight.airline.includes("Singapore") || flight.airline.includes("American") ? "center" : "left"}
+            singaporeAirlinesDisplay={flight.airline.includes("Singapore") ? "inline-block" : "unset"}
+            singaporeAirlinesWidth={flight.airline.includes("Singapore") ? "140px" : "unset"}
+            aM={flight.departure}
+            flightDurationWidth={flight.stops === 2 ? "129px" : "121px"}
+            flightIcon={index === 0 ? "/flighticon.svg" : "/flighticon1.svg"}
+            flightIconWidth={flight.stops === 2 ? "83.02%" : "88.51%"}
+            flightIconRight={flight.stops === 2 ? "8.27%" : "5.51%"}
+            flightIconLeft={flight.stops === 2 ? "8.71%" : "5.98%"}
+            h55MNonStop={flight.duration}
+            aM1={flight.arrival}
+            s730={flight.price}
+          />
+        ))
+      ) : (
+        <div className={styles.noResults}>
+          <p>No flights found matching your criteria. Try adjusting your filters.</p>
+        </div>
+      )}
       <button className={styles.primaryButton}>
         <div className={styles.primaryButtonChild} />
-        <div className={styles.searchFlights}>Show more results</div>
+        <div className={styles.searchFlights}>
+          {filteredFlights.length > 0 ? "Show more results" : "Clear filters"}
+        </div>
       </button>
     </div>
   );

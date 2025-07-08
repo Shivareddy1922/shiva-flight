@@ -2,7 +2,7 @@ import { FunctionComponent, useState, useCallback } from "react";
 import { TextField, Icon, Checkbox, FormControlLabel } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import InputGroup from "./InputGroup";
 import FlightCards from "./FlightCards";
 import NewsletterFormSection from "./NewsletterFormSection";
@@ -18,15 +18,50 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
 }) => {
   const [dateFieldDateTimePickerValue, setDateFieldDateTimePickerValue] =
     useState(null);
+  const [searchParams] = useSearchParams();
+  const [departure, setDeparture] = useState(searchParams.get('departure') || "Singapore (SIN)");
+  const [destination, setDestination] = useState(searchParams.get('destination') || "Los Angeles (LAX)");
+  const [filters, setFilters] = useState({
+    bookOnFickleflight: false,
+    officialAirlines: false,
+    noOvernightFlights: false,
+    noLongStopovers: false,
+    singaporeAirlines: false,
+    qatarAirways: false,
+    oneStop: false,
+    twoStops: false,
+  });
+  
   const navigate = useNavigate();
 
   const onFickleflightLogoClick = useCallback(() => {
-    navigate("/homepage");
+    navigate("/");
   }, [navigate]);
 
-  const onHotelsTextClick = useCallback(() => {
-    navigate("/hotels-page");
+  const onSearchClick = useCallback(() => {
+    navigate("/results");
   }, [navigate]);
+
+  const onLoginClick = useCallback(() => {
+    navigate("/dashboard");
+  }, [navigate]);
+
+  const handleFilterChange = (filterName: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterName]: !prev[filterName as keyof typeof prev]
+    }));
+  };
+
+  const onSearchFlights = useCallback(() => {
+    // Update URL with new search parameters
+    const searchParams = new URLSearchParams({
+      departure: departure,
+      destination: destination,
+      date: dateFieldDateTimePickerValue ? dateFieldDateTimePickerValue.toISOString() : ""
+    });
+    navigate(`/results?${searchParams.toString()}`);
+  }, [navigate, departure, destination, dateFieldDateTimePickerValue]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -47,13 +82,16 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                 >
                   Explore
                 </div>
-                <button className={styles.search}>Search</button>
-                <div className={styles.explore} onClick={onHotelsTextClick}>
+                <button className={styles.search} onClick={onSearchClick}>Search</button>
+                <div className={styles.explore}>
                   Hotels
                 </div>
                 <button className={styles.offers}>Offers</button>
               </div>
               <div className={styles.accountSection}>
+                <button className={styles.loginButton} onClick={onLoginClick}>
+                  Login
+                </button>
                 <img
                   className={styles.hamburgerMenuIcon}
                   alt=""
@@ -87,8 +125,16 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
               </div>
               <div className={styles.searchForm}>
                 <div className={styles.inputsRow}>
-                  <InputGroup />
-                  <InputGroup />
+                  <InputGroup 
+                    label="Departure"
+                    value={departure}
+                    onChange={setDeparture}
+                  />
+                  <InputGroup 
+                    label="Destination"
+                    value={destination}
+                    onChange={setDestination}
+                  />
                   <div className={styles.inputGroup}>
                     <div className={styles.dateField}>
                       <DatePicker
@@ -122,7 +168,7 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                   </div>
                 </div>
                 <div className={styles.buttonGroup}>
-                  <button className={styles.searchFlightsButton}>
+                  <button className={styles.searchFlightsButton} onClick={onSearchFlights}>
                     <div className={styles.button}>Search flights</div>
                   </button>
                 </div>
@@ -133,7 +179,12 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
         <div className={styles.searchResults}>
           <div className={styles.searchFilters}>
             <div className={styles.resultsSummary}>
-              <div className={styles.results}>10 out of 177 Results</div>
+              <div className={styles.results}>
+                {departure && destination ? 
+                  `Flights from ${departure.split('(')[0].trim()} to ${destination.split('(')[0].trim()}` :
+                  "10 out of 177 Results"
+                }
+              </div>
               <img
                 className={styles.resultsSummaryChild}
                 alt=""
@@ -146,13 +197,25 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                 className={styles.component1formcheckbox}
                 label="Book on Fickleflight"
                 labelPlacement="end"
-                control={<Checkbox size="medium" />}
+                control={
+                  <Checkbox 
+                    size="medium" 
+                    checked={filters.bookOnFickleflight}
+                    onChange={() => handleFilterChange('bookOnFickleflight')}
+                  />
+                }
               />
               <FormControlLabel
                 className={styles.component1formcheckbox1}
                 label="Official Airline Websites"
                 labelPlacement="end"
-                control={<Checkbox size="medium" />}
+                control={
+                  <Checkbox 
+                    size="medium" 
+                    checked={filters.officialAirlines}
+                    onChange={() => handleFilterChange('officialAirlines')}
+                  />
+                }
               />
             </div>
             <div className={styles.flightExperience}>
@@ -161,13 +224,27 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                 className={styles.component1formcheckbox}
                 label="No overnight flights"
                 labelPlacement="end"
-                control={<Checkbox color="primary" size="medium" />}
+                control={
+                  <Checkbox 
+                    color="primary" 
+                    size="medium" 
+                    checked={filters.noOvernightFlights}
+                    onChange={() => handleFilterChange('noOvernightFlights')}
+                  />
+                }
               />
               <FormControlLabel
                 className={styles.component1formcheckbox1}
                 label="No long stop-overs"
                 labelPlacement="end"
-                control={<Checkbox color="primary" size="medium" />}
+                control={
+                  <Checkbox 
+                    color="primary" 
+                    size="medium" 
+                    checked={filters.noLongStopovers}
+                    onChange={() => handleFilterChange('noLongStopovers')}
+                  />
+                }
               />
             </div>
             <div className={styles.airlines}>
@@ -176,13 +253,27 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                 className={styles.component1formcheckbox}
                 label="Singapore Airlines"
                 labelPlacement="end"
-                control={<Checkbox color="primary" size="medium" />}
+                control={
+                  <Checkbox 
+                    color="primary" 
+                    size="medium" 
+                    checked={filters.singaporeAirlines}
+                    onChange={() => handleFilterChange('singaporeAirlines')}
+                  />
+                }
               />
               <FormControlLabel
                 className={styles.component1formcheckbox1}
                 label="Qatar Airways"
                 labelPlacement="end"
-                control={<Checkbox color="primary" size="medium" />}
+                control={
+                  <Checkbox 
+                    color="primary" 
+                    size="medium" 
+                    checked={filters.qatarAirways}
+                    onChange={() => handleFilterChange('qatarAirways')}
+                  />
+                }
               />
             </div>
             <div className={styles.stops}>
@@ -191,18 +282,30 @@ const ResultsPage: FunctionComponent<ResultsPageType> = ({
                 className={styles.component1formcheckbox}
                 label="1 Stop"
                 labelPlacement="end"
-                control={<Checkbox size="medium" />}
+                control={
+                  <Checkbox 
+                    size="medium" 
+                    checked={filters.oneStop}
+                    onChange={() => handleFilterChange('oneStop')}
+                  />
+                }
               />
               <FormControlLabel
                 className={styles.component1formcheckbox1}
                 label="2 Stops"
                 labelPlacement="end"
-                control={<Checkbox size="medium" />}
+                control={
+                  <Checkbox 
+                    size="medium" 
+                    checked={filters.twoStops}
+                    onChange={() => handleFilterChange('twoStops')}
+                  />
+                }
               />
             </div>
             <img className={styles.seperatorIcon} alt="" src="/seperator.svg" />
           </div>
-          <FlightCards />
+          <FlightCards filters={filters} />
         </div>
         <div className={styles.footerSection}>
           <div className={styles.footerSection}>

@@ -1,5 +1,5 @@
 .symbolsIcon {
-  position: absolute;
+  position: relative;
   height: 96.97%;
   width: 99.83%;
   top: 1.59%;
@@ -39,21 +39,6 @@
 .offers {
   color: var(--color-darkslategray-200);
 }
-.loginButton {
-  background-color: var(--color-orange-200);
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: var(--br-4);
-  font-size: var(--font-size-14);
-  font-family: var(--font-roboto);
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-right: 16px;
-}
-.loginButton:hover {
-  background-color: var(--color-darkorange);
-}
 .navigationMenu {
   display: flex;
   flex-direction: row;
@@ -76,6 +61,20 @@
   width: 36px;
   height: 36px;
   object-fit: cover;
+}
+.loginButton {
+  background-color: var(--color-orange-200);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--br-4);
+  font-size: var(--font-size-14);
+  font-family: var(--font-roboto);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.loginButton:hover {
+  background-color: var(--color-darkorange);
 }
 .accountSection {
   display: flex;
@@ -240,123 +239,8 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
-.results {
-  position: absolute;
-  top: 0;
-  left: 0;
-  letter-spacing: 0.26px;
-  display: inline-block;
-  width: 219.4px;
-}
-.resultsSummaryChild {
-  position: absolute;
-  top: 46.5px;
-  left: 0;
-  max-height: 100%;
-  width: 311.5px;
-}
-.results1,
-.resultsSummary {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.resultsSummary {
-  width: 311.5px;
-  height: 47px;
-  font-size: var(--font-size-20);
-}
-.results1 {
-  letter-spacing: 0.26px;
-  display: inline-block;
-  width: 189px;
-}
-.component1formcheckbox {
-  position: absolute;
-  top: 50px;
-  left: 0;
-}
-.bookingOptions,
-.component1formcheckbox1 {
-  position: absolute;
-  top: 86px;
-  left: 0;
-}
-.bookingOptions {
-  top: 231.4px;
-  width: 221px;
-  height: 106px;
-}
-.results2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  letter-spacing: 0.26px;
-  display: inline-block;
-  width: 198px;
-}
-.flightExperience {
-  top: 376.6px;
-  width: 310.8px;
-  height: 106px;
-}
-.airlines,
-.flightExperience,
-.results3 {
-  position: absolute;
-  left: 0;
-}
-.results3 {
-  top: 0;
-  letter-spacing: 0.26px;
-  display: inline-block;
-  width: 87.8px;
-}
-.airlines {
-  top: 561px;
-  width: 181px;
-  height: 106px;
-}
-.results4 {
-  top: 0;
-  letter-spacing: 0.26px;
-  display: inline-block;
-  width: 65.3px;
-}
-.results4,
-.seperatorIcon,
-.stops {
-  position: absolute;
-  left: 0;
-}
-.stops {
-  top: 86.2px;
-  width: 296.6px;
-  height: 106px;
-}
-.seperatorIcon {
-  top: 521.3px;
-  max-height: 100%;
-  width: 350.5px;
-}
-.searchFilters {
-  position: relative;
-  width: 350.5px;
-  height: 667px;
-}
-.searchResults {
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 50px var(--padding-80);
-  font-size: var(--font-size-22);
-  color: var(--color-dimgray-200);
-  font-family: var(--font-roboto);
-}
 .footerSection,
-.resultsPage {
+.homePage {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -365,7 +249,7 @@
 .footerSection {
   align-self: stretch;
 }
-.resultsPage {
+.homePage {
   background-color: var(--color-white);
   max-width: 100%;
   width: 1440px;
@@ -379,13 +263,6 @@
   .topHeader {
     padding-left: var(--padding-40);
     padding-right: var(--padding-40);
-    box-sizing: border-box;
-  }
-  .searchFilters {
-    display: none;
-  }
-  .searchResults {
-    padding: var(--padding-40);
     box-sizing: border-box;
   }
 }
@@ -424,10 +301,6 @@
     box-sizing: border-box;
     width: 100%;
     top: calc(44% - 96.5px - 0px);
-  }
-  .searchResults {
-    padding: var(--padding-20) var(--padding-24);
-    box-sizing: border-box;
   }
 }
 @media screen and (max-width: 650px) {

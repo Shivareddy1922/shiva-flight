@@ -5,7 +5,9 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-import InputGroup from "./components/InputGroup";
+import HomePage from "./pages/HomePage";
+import Dashboard from "./pages/Dashboard";
+import ResultsPage from "./components/ResultsPage";
 
 function App() {
   const action = useNavigationType();
@@ -24,8 +26,16 @@ function App() {
 
     switch (pathname) {
       case "/":
-        title = "";
-        metaDescription = "";
+        title = "FickleFlight - Your Travel Companion";
+        metaDescription = "Find and book flights with ease";
+        break;
+      case "/results":
+        title = "Flight Results - FickleFlight";
+        metaDescription = "Browse available flights";
+        break;
+      case "/dashboard":
+        title = "Dashboard - FickleFlight";
+        metaDescription = "Manage your bookings and profile";
         break;
     }
 
@@ -45,7 +55,9 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<InputGroup />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/results" element={<ResultsPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }

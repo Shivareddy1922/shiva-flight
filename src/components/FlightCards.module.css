@@ -40,3 +40,12 @@
   color: var(--color-dimgray-200);
   font-family: var(--font-roboto);
 }
+.noResults {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-dimgray-200);
+  font-size: var(--font-size-16);
+  background-color: var(--color-white);
+  border-radius: var(--br-6);
+  margin-bottom: 20px;
+}

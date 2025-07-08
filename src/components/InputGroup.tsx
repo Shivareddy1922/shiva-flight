@@ -4,32 +4,56 @@ import styles from "./InputGroup.module.css";
 
 export type InputGroupType = {
   className?: string;
+  label?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
-const InputGroup: FunctionComponent<InputGroupType> = ({ className = "" }) => {
+const InputGroup: FunctionComponent<InputGroupType> = ({ 
+  className = "",
+  label = "Departure",
+  value = "",
+  onChange
+}) => {
+  const options = label === "Departure" ? [
+    "Singapore (SIN)",
+    "Sydney (SYD)",
+    "Siem Reap (REP)",
+    "Shanghai (PVG)",
+    "Sanya (SYX)",
+  ] : [
+    "Los Angeles (LAX)",
+    "New York (JFK)",
+    "London (LHR)",
+    "Tokyo (NRT)",
+    "Paris (CDG)",
+    "Dubai (DXB)",
+    "Bangkok (BKK)",
+  ];
+
   return (
     <div className={[styles.inputGroup, className].join(" ")}>
       <Autocomplete
         className={styles.departureField}
         size="medium"
         disablePortal
-        options={[
-          "Singapore (SIN)",
-          "Sydney (SYD)",
-          "Siem Reap (REP)",
-          "Shanghai (PVG)Sanya (SYX)",
-        ]}
+        options={options}
+        value={value}
+        onChange={(event, newValue) => {
+          if (onChange) {
+            onChange(newValue || "");
+          }
+        }}
         renderInput={(params: any) => (
           <TextField
             {...params}
             color="primary"
-            label="Departure"
+            label={label}
             variant="outlined"
             placeholder=""
             helperText=""
           />
         )}
-        defaultValue="Singapore -  Changi (SIN)"
       />
     </div>
   );
